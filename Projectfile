@@ -1,0 +1,10 @@
+name = 'edgy.event'
+description = 'Event dispatcher'
+license = 'Apache License, Version 2.0'
+requirements = ''''''
+
+enable_features = {
+    'git',
+    'make',
+    'virtualenv'
+}
