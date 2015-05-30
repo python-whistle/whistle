@@ -16,4 +16,4 @@ $(VIRTUALENV_PATH):
 	ln -fs $(VIRTUALENV_PATH)/bin/activate
 
 test: install
-	nosetests -q --with-doctest --with-coverage --cover-package=edgy.project
+	nosetests -q --with-doctest --with-coverage --cover-package=edgy.event
