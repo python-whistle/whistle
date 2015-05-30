@@ -36,4 +36,7 @@ setup(
     packages = find_packages(exclude=['ez_setup', 'example', 'test']),
     include_package_data = True,
     install_requires = read('requirements.txt', requirements_filter),
+    url = 'https://github.com/python-edgy/event',
+    download_url = 'https://github.com/python-edgy/event/tarball/' + version,
+
 )
