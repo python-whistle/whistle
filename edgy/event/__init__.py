@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 import operator
 
 
@@ -65,6 +67,7 @@ class EventDispatcher(object):
 
         for priority, listeners in self._listeners[event_name]:
             if listener in self._listeners[event_name][priority]:
+                # pylint: disable=filter-builtin-not-iterating
                 self._listeners[event_name][priority] = filter(
                     lambda l: l != listener,
                     self._listeners[event_name][priority]
