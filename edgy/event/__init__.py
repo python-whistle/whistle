@@ -4,16 +4,10 @@ import operator
 
 
 class Event(object):
-    def __init__(self):
-        self._propagation_stopped = False
-        self.name = None
-        self.dispatcher = None
-
-    def is_propagation_stopped(self):
-        return self._propagation_stopped
+    propagation_stopped = False
 
     def stop_propagation(self):
-        self._propagation_stopped = True
+        self.propagation_stopped = True
 
 
 class EventDispatcher(object):
@@ -61,6 +55,22 @@ class EventDispatcher(object):
         if event_name in self._sorted:
             del self._sorted[event_name]
 
+    def listen(self, event_name, priority=0):
+        """
+        Decorator that add the decorated functions as one of this instance listeners, for the given event name.
+
+        :param event_name:
+        :param priority:
+        :return:
+
+        """
+
+        def wrapper(listener):
+            self.add_listener(event_name, listener, priority)
+            return listener
+
+        return wrapper
+
     def remove_listener(self, event_name, listener):
         if not event_name in self._listeners:
             return
@@ -78,7 +88,7 @@ class EventDispatcher(object):
     def do_dispatch(self, listeners, event_name, event):
         for listener in listeners:
             listener(event)
-            if event.is_propagation_stopped(): break
+            if event.propagation_stopped: break
 
     def sort_listeners(self, event_name):
         self._sorted[event_name] = []
