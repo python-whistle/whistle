@@ -1,10 +1,12 @@
+*.egg-info
 *.pyc
 *.swp
+/.cache
+/.coverage
+/.idea
+/.python-pipcache
 /.python-virtualenv
 /.python-wheelhouse
-/.python-pipcache
-/.coverage
 /build
 /dist
-*.egg-info
-/.idea
+/htmlcov
