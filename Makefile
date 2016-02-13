@@ -24,4 +24,4 @@ lint: install
 	$(VIRTUALENV_PATH)/bin/pylint --py3k edgy.event -f html > pylint.html
 
 test: install
-	$(VIRTUALENV_PATH)/bin/nosetests -q --with-doctest --with-coverage --cover-package=edgy.event
+	$(VIRTUALENV_PATH)/bin/py.test --cov=edgy/event --cov-report html tests/

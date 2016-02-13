@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from unittest import TestCase
-from unittest import mock
+try:
+    from unittest import mock
+except ImportError:
+    import mock
 
 from edgy.event import Event, EventDispatcher
 
