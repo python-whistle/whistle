@@ -10,10 +10,22 @@ download_url = 'https://github.com/python-edgy/event/tarball/{version}'
 author = 'Romain Dorgueil'
 author_email = 'edgy@rdc.li'
 
-requirements = ''
-
+# Features
 enable_features = {
+    'python',
     'git',
     'make',
-    'virtualenv'
+    'sphinx',
+    'virtualenv',
 }
+
+@listen('edgy.project.feature.make.on_generate')
+def on_make_generate_add_development(event):
+    event.makefile.add_target('install-dev', '''
+    	if [ -z "$(QUICK)" ]; then \
+            $(PIP) install -f $(WHEELHOUSE_PATH) -U "file://`pwd`#egg={name}[dev]" \
+        fi
+    '''.format(name=name), deps=('$(VIRTUALENV_PATH)', ), phony=True)
+
+    event.makefile.set_deps('lint', deps=('install-dev', ))
+    event.makefile.set_deps('test', deps=('install-dev', ))
