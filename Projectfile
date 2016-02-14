@@ -22,8 +22,8 @@ enable_features = {
 @listen('edgy.project.feature.make.on_generate')
 def on_make_generate_add_development(event):
     event.makefile.add_target('install-dev', '''
-    	if [ -z "$(QUICK)" ]; then \
-            $(PIP) install -f $(WHEELHOUSE_PATH) -U "file://`pwd`#egg={name}[dev]" \
+        if [ -z "$(QUICK)" ]; then \\
+            $(PIP) install -f $(WHEELHOUSE_PATH) -U "file://`pwd`#egg={name}[dev]"; \\
         fi
     '''.format(name=name), deps=('$(VIRTUALENV_PATH)', ), phony=True)
 

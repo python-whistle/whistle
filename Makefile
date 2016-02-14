@@ -1,7 +1,7 @@
 # This file has been auto-generated.
 # All manual changes may be lost, see Projectfile.
 #
-# Date: 2016-02-14 15:00:01.062898
+# Date: 2016-02-14 15:05:30.336039
 
 PYTHON ?= $(shell which python)
 PYTHON_BASENAME ?= $(shell basename $(PYTHON))
@@ -42,7 +42,9 @@ lint: install-dev
 	$(VIRTUALENV_PATH)/bin/pylint --py3k edgy.event -f html > pylint.html
 
 install-dev: $(VIRTUALENV_PATH)
-	if [ -z "$(QUICK)" ]; then             $(PIP) install -f $(WHEELHOUSE_PATH) -U "file://`pwd`#egg=edgy.event[dev]"         fi
+	if [ -z "$(QUICK)" ]; then \
+	    $(PIP) install -f $(WHEELHOUSE_PATH) -U "file://`pwd`#egg=edgy.event[dev]"; \
+	fi
 
 doc: install
 	$(SPHINX_BUILD) -b html -D latex_paper_size=a4 $(SPHINX_OPTS) $(SPHINX_SOURCEDIR) $(SPHINX_BUILDDIR)/html
