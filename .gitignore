@@ -9,4 +9,5 @@
 /.python-wheelhouse
 /build
 /dist
+/doc/_build
 /htmlcov
