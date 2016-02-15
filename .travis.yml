@@ -11,6 +11,5 @@ install:
   - make
 script:
   - make clean
-  - make lint
   - make doc
   - make test
