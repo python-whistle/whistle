@@ -1,26 +1,25 @@
 # This file has been auto-generated.
 # All manual changes may be lost, see Projectfile.
 #
-# Date: 2016-02-14 15:33:41.701627
+# Date: 2016-02-14 16:17:29.663484
 
 PYTHON ?= $(shell which python)
 PYTHON_BASENAME ?= $(shell basename $(PYTHON))
 PYTHON_REQUIREMENTS_FILE ?= requirements.txt
 QUICK ?= 
-VIRTUALENV_PATH ?= .$(PYTHON_BASENAME)-virtualenv
-WHEELHOUSE_PATH ?= .$(PYTHON_BASENAME)-wheelhouse
-PIPCACHE_PATH ?= .$(PYTHON_BASENAME)-pipcache
-PIP ?= $(VIRTUALENV_PATH)/bin/pip --cache-dir=$(PIPCACHE_PATH)
+VIRTUALENV_PATH ?= .virtualenv-$(PYTHON_BASENAME)
+WHEELHOUSE ?= .wheels
+PIP ?= $(VIRTUALENV_PATH)/bin/pip
 PYTEST_OPTIONS ?= --capture=no --cov=edgy/event --cov-report html
 SPHINX_OPTS ?= 
 SPHINX_BUILD ?= $(VIRTUALENV_PATH)/bin/sphinx-build
 SPHINX_SOURCEDIR ?= doc
 SPHINX_BUILDDIR ?= $(SPHINX_SOURCEDIR)/_build
 
-.PHONY: clean doc install install-dev lint test
+.PHONY: $(WHEELHOUSE) clean doc install install-dev lint test
 
 # Installs the local project dependencies.
-install: $(VIRTUALENV_PATH)
+install: $(VIRTUALENV_PATH) $(WHEELHOUSE)
 	if [ -z "$(QUICK)" ]; then \
 	    $(PIP) install -Ue "file://`pwd`#egg=edgy.event[dev]"; \
 	fi
@@ -28,11 +27,16 @@ install: $(VIRTUALENV_PATH)
 # Setup the local virtualenv.
 $(VIRTUALENV_PATH):
 	virtualenv -p $(PYTHON) $(VIRTUALENV_PATH)
-	$(VIRTUALENV_PATH)/bin/pip install -U pip\>=8.0,\<9.0 wheel\>=0.24,\<1.0
-	ln -fs $(VIRTUALENV_PATH)/bin/activate $(PYTHON_BASENAME)-activate
+	$(PIP) install -U pip\>=8.0,\<9.0 wheel\>=0.24,\<1.0
+	ln -fs $(VIRTUALENV_PATH)/bin/activate activate-$(PYTHON_BASENAME)
+
+# Setup the local python wheel-house.
+$(WHEELHOUSE): $(VIRTUALENV_PATH)
+	$(PIP) install -U pip\>=8.0,\<9.0 wheel\>=0.24,\<1.0
+	$(PIP) wheel --wheel-dir=$@ -e "file://`pwd`#egg=edgy.event[dev]"
 
 clean:
-	rm -rf $(VIRTUALENV_PATH) $(WHEELHOUSE_PATH) $(PIPCACHE_PATH)
+	rm -rf $(VIRTUALENV_PATH) $(WHEELHOUSE)
 
 lint: install-dev
 	$(VIRTUALENV_PATH)/bin/pylint --py3k edgy.event -f html > pylint.html
@@ -40,7 +44,7 @@ lint: install-dev
 test: install-dev
 	$(VIRTUALENV_PATH)/bin/py.test $(PYTEST_OPTIONS) tests
 
-install-dev: $(VIRTUALENV_PATH)
+install-dev: $(VIRTUALENV_PATH) $(WHEELHOUSE)
 	if [ -z "$(QUICK)" ]; then \
 	    $(PIP) install -Ue "file://`pwd`#egg=edgy.event[dev]"; \
 	fi

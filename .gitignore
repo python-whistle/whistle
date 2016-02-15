@@ -4,9 +4,8 @@
 /.cache
 /.coverage
 /.idea
-/.python-pipcache
-/.python-virtualenv
-/.python-wheelhouse
+/.virtualenv-python*
+/.wheels
 /build
 /dist
 /doc/_build

@@ -38,7 +38,7 @@ def on_make_generate_add_development(event):
         if [ -z "$(QUICK)" ]; then \\
             $(PIP) install -Ue "file://`pwd`#egg={name}[dev]"; \\
         fi
-    '''.format(name=name), deps=('$(VIRTUALENV_PATH)', ), phony=True)
+    '''.format(name=name), deps=('$(VIRTUALENV_PATH)', '$(WHEELHOUSE)'), phony=True)
 
     event.makefile.set_deps('lint', deps=('install-dev', ))
     event.makefile.set_deps('test', deps=('install-dev', ))
