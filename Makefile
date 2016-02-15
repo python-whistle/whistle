@@ -1,14 +1,13 @@
 # This file has been auto-generated.
 # All manual changes may be lost, see Projectfile.
 #
-# Date: 2016-02-14 16:17:29.663484
+# Date: 2016-02-15 08:37:10.941935
 
 PYTHON ?= $(shell which python)
 PYTHON_BASENAME ?= $(shell basename $(PYTHON))
 PYTHON_REQUIREMENTS_FILE ?= requirements.txt
 QUICK ?= 
 VIRTUALENV_PATH ?= .virtualenv-$(PYTHON_BASENAME)
-WHEELHOUSE ?= .wheels
 PIP ?= $(VIRTUALENV_PATH)/bin/pip
 PYTEST_OPTIONS ?= --capture=no --cov=edgy/event --cov-report html
 SPHINX_OPTS ?= 
@@ -16,10 +15,10 @@ SPHINX_BUILD ?= $(VIRTUALENV_PATH)/bin/sphinx-build
 SPHINX_SOURCEDIR ?= doc
 SPHINX_BUILDDIR ?= $(SPHINX_SOURCEDIR)/_build
 
-.PHONY: $(WHEELHOUSE) clean doc install install-dev lint test
+.PHONY: clean doc install install-dev lint test
 
 # Installs the local project dependencies.
-install: $(VIRTUALENV_PATH) $(WHEELHOUSE)
+install: $(VIRTUALENV_PATH)
 	if [ -z "$(QUICK)" ]; then \
 	    $(PIP) install -Ue "file://`pwd`#egg=edgy.event[dev]"; \
 	fi
@@ -30,13 +29,8 @@ $(VIRTUALENV_PATH):
 	$(PIP) install -U pip\>=8.0,\<9.0 wheel\>=0.24,\<1.0
 	ln -fs $(VIRTUALENV_PATH)/bin/activate activate-$(PYTHON_BASENAME)
 
-# Setup the local python wheel-house.
-$(WHEELHOUSE): $(VIRTUALENV_PATH)
-	$(PIP) install -U pip\>=8.0,\<9.0 wheel\>=0.24,\<1.0
-	$(PIP) wheel --wheel-dir=$@ -e "file://`pwd`#egg=edgy.event[dev]"
-
 clean:
-	rm -rf $(VIRTUALENV_PATH) $(WHEELHOUSE)
+	rm -rf $(VIRTUALENV_PATH)
 
 lint: install-dev
 	$(VIRTUALENV_PATH)/bin/pylint --py3k edgy.event -f html > pylint.html
