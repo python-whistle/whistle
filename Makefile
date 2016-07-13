@@ -1,7 +1,7 @@
 # This file has been auto-generated.
 # All manual changes may be lost, see Projectfile.
 #
-# Date: 2016-02-15 08:37:10.941935
+# Date: 2016-07-13 09:00:24.196912
 
 PYTHON ?= $(shell which python)
 PYTHON_BASENAME ?= $(shell basename $(PYTHON))
@@ -20,7 +20,7 @@ SPHINX_BUILDDIR ?= $(SPHINX_SOURCEDIR)/_build
 # Installs the local project dependencies.
 install: $(VIRTUAL_ENV)
 	if [ -z "$(QUICK)" ]; then \
-	    $(PIP) install -Ue "file://`pwd`#egg=edgy.event[dev]"; \
+	    $(PIP) install -Ur $(PYTHON_REQUIREMENTS_FILE) ; \
 	fi
 
 # Setup the local virtualenv.
@@ -38,10 +38,10 @@ lint: install-dev
 test: install-dev
 	$(VIRTUAL_ENV)/bin/py.test $(PYTEST_OPTIONS) tests
 
-install-dev: $(VIRTUAL_ENV) $(WHEELHOUSE)
-	if [ -z "$(QUICK)" ]; then \
-	    $(PIP) install -Ue "file://`pwd`#egg=edgy.event[dev]"; \
-	fi
-
-doc: install
+doc: install-dev
 	$(SPHINX_BUILD) -b html -D latex_paper_size=a4 $(SPHINX_OPTS) $(SPHINX_SOURCEDIR) $(SPHINX_BUILDDIR)/html
+
+install-dev: $(VIRTUALENV_PATH) $(WHEELHOUSE)
+	if [ -z "$(QUICK)" ]; then \
+	    $(PIP) install -Ur requirements.dev.txt; \
+	fi
