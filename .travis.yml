@@ -8,8 +8,9 @@ python:
   - nightly
   - pypy
 install:
-  - make
+  - make install-dev
+  - pip install coveralls
 script:
-  - make clean
-  - make doc
-  - make test
+  - make clean doc test
+after_success:
+  - coveralls
