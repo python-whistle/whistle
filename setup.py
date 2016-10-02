@@ -10,37 +10,27 @@ def read(filename, flt=None):
         content = f.read().strip()
         return flt(content) if callable(flt) else content
 
-def requirements_filter(c):
-    install_requires = []
-    for requirement in tolines(c):
-        _pos = requirement.find('#egg=')
-        if _pos != -1:
-            requirement = requirement[_pos+5:].strip()
-        _pos = requirement.find('#')
-        if _pos != -1:
-            requirement = requirement[0:_pos].strip()
-        if len(requirement):
-            install_requires.append(requirement)
-    return install_requires
-
-version = read('version.txt')
+try:
+    version = read('version.txt')
+except:
+    version = 'dev'
 
 setup(
     name = 'edgy.event',
     description = 'Event dispatcher',
     license = 'Apache License, Version 2.0',
     install_requires = [],
-    namespace_packages = ['edgy'],
+    namespace_packages = [u'edgy'],
     version = version,
     long_description = read('README.rst'),
     classifiers = read('classifiers.txt', tolines),
     packages = find_packages(exclude=['ez_setup', 'example', 'test']),
     include_package_data = True,
-    extras_require = {'dev': ['coverage >=4.0,<4.2',
+    extras_require = {'dev': ['coverage >=4.2,<4.3',
          'mock >=2.0,<2.1',
          'nose >=1.3,<1.4',
          'pylint >=1.6,<1.7',
-         'pytest >=2.9,<2.10',
+         'pytest >=3.0,<3.1',
          'pytest-cov >=2.3,<2.4',
          'sphinx',
          'sphinx_rtd_theme']},
