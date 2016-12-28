@@ -8,5 +8,5 @@
 /.wheels
 /build
 /dist
-/doc/_build
+/docs/_build
 /htmlcov
