@@ -17,6 +17,7 @@ enable_features = {
     'pytest',
     'python',
     'sphinx',
+    'yapf',
 }
 
 extras_require = {
@@ -29,6 +30,7 @@ extras_require = {
         'pytest-cov >=2.3,<2.4',
         'sphinx',
         'sphinx_rtd_theme',
+        'yapf',
     ]
 }
 

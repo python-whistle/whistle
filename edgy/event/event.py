@@ -2,6 +2,7 @@
 
 from __future__ import absolute_import
 
+
 class Event(object):
     propagation_stopped = False
 
