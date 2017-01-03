@@ -25,9 +25,10 @@ class BasicTest(TestCase):
         dispatcher = EventDispatcher()
 
         for event_id in (
-                STRING_EVENT_ID,
-                OBJECT_EVENT_ID,
-                NUMERIC_EVENT_ID, ):
+            STRING_EVENT_ID,
+            OBJECT_EVENT_ID,
+            NUMERIC_EVENT_ID,
+        ):
             listener = mock.MagicMock()
             assert not dispatcher.has_listeners(event_id)
             dispatcher.add_listener(event_id, listener)
@@ -49,9 +50,10 @@ class BasicTest(TestCase):
         dispatcher = EventDispatcher()
 
         for event_id in (
-                STRING_EVENT_ID,
-                OBJECT_EVENT_ID,
-                NUMERIC_EVENT_ID, ):
+            STRING_EVENT_ID,
+            OBJECT_EVENT_ID,
+            NUMERIC_EVENT_ID,
+        ):
             listener1 = mock.MagicMock()
 
             def listener2(event):
@@ -83,17 +85,19 @@ class BasicTest(TestCase):
         listeners = dispatcher.get_listeners()
         assert len(listeners) == 3
         for event_id in (
-                STRING_EVENT_ID,
-                OBJECT_EVENT_ID,
-                NUMERIC_EVENT_ID, ):
+            STRING_EVENT_ID,
+            OBJECT_EVENT_ID,
+            NUMERIC_EVENT_ID,
+        ):
             assert len(listeners[event_id]) == 3
 
     def test_no_listener(self):
         dispatcher = EventDispatcher()
         for event_id in (
-                STRING_EVENT_ID,
-                OBJECT_EVENT_ID,
-                NUMERIC_EVENT_ID, ):
+            STRING_EVENT_ID,
+            OBJECT_EVENT_ID,
+            NUMERIC_EVENT_ID,
+        ):
             assert not dispatcher.has_listeners(event_id)
 
             e = dispatcher.dispatch(event_id)
@@ -103,9 +107,10 @@ class BasicTest(TestCase):
         dispatcher = EventDispatcher()
 
         for event_id in (
-                STRING_EVENT_ID,
-                OBJECT_EVENT_ID,
-                NUMERIC_EVENT_ID, ):
+            STRING_EVENT_ID,
+            OBJECT_EVENT_ID,
+            NUMERIC_EVENT_ID,
+        ):
             listener = mock.MagicMock()
             assert not dispatcher.has_listeners(event_id)
             dispatcher.add_listener(event_id, listener)
@@ -131,9 +136,10 @@ class BasicTest(TestCase):
         dispatcher = EventDispatcher()
 
         for event_id in (
-                STRING_EVENT_ID,
-                OBJECT_EVENT_ID,
-                NUMERIC_EVENT_ID, ):
+            STRING_EVENT_ID,
+            OBJECT_EVENT_ID,
+            NUMERIC_EVENT_ID,
+        ):
             listener = mock.MagicMock()
             dispatcher.listen(event_id)(listener)
             e = dispatcher.dispatch(event_id)

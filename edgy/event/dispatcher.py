@@ -86,8 +86,9 @@ class EventDispatcher(object):
         for priority, listeners in self._listeners[event_id].items():
             if listener in self._listeners[event_id][priority]:
                 # pylint: disable=filter-builtin-not-iterating
-                self._listeners[event_id][priority] = filter(lambda l: l != listener,
-                                                             self._listeners[event_id][priority])
+                self._listeners[event_id][priority] = filter(
+                    lambda l: l != listener, self._listeners[event_id][priority]
+                )
                 if event_id in self._sorted:
                     del self._sorted[event_id]
 
@@ -102,5 +103,6 @@ class EventDispatcher(object):
             self._sorted[event_id] = [
                 listener
                 for listeners in sorted(
-                    self._listeners[event_id].items(), key=operator.itemgetter(0)) for listener in listeners[1]
+                    self._listeners[event_id].items(), key=operator.itemgetter(0)
+                ) for listener in listeners[1]
             ]

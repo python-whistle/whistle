@@ -8,43 +8,44 @@ root_dir = os.path.dirname(os.path.abspath(__file__))
 
 tolines = lambda c: list(filter(None, map(lambda s: s.strip(), c.split('\n'))))
 
+
 def read(filename, flt=None):
     with open(filename) as f:
         content = f.read().strip()
         return flt(content) if callable(flt) else content
 
+
 # Py3 compatibility hacks, borrowed from IPython.
 try:
     execfile
 except NameError:
+
     def execfile(fname, globs, locs=None):
         locs = locs or globs
         exec(compile(open(fname).read(), fname, "exec"), globs, locs)
+
 
 version_ns = {}
 execfile(os.path.join(root_dir, 'edgy/event/_version.py'), version_ns)
 version = version_ns.get('__version__', 'dev')
 
 setup(
-    name = 'edgy.event',
-    description = 'Event dispatcher',
-    license = 'Apache License, Version 2.0',
-    install_requires = [],
-    namespace_packages = ['edgy'],
-    version = version,
-    long_description = read('README.rst'),
-    classifiers = read('classifiers.txt', tolines),
-    packages = find_packages(exclude=['ez_setup', 'example', 'test']),
-    include_package_data = True,
-    extras_require = {'dev': ['coverage >=4.2,<4.3',
-         'mock >=2.0,<2.1',
-         'nose >=1.3,<1.4',
-         'pylint >=1.6,<1.7',
-         'pytest >=3.0,<3.1',
-         'pytest-cov >=2.3,<2.4',
-         'sphinx',
-         'sphinx_rtd_theme',
-         'yapf']},
-    url = 'https://github.com/python-edgy/event',
-    download_url = 'https://github.com/python-edgy/event/tarball/{version}'.format(version=version),
+    name='edgy.event',
+    description='Event dispatcher',
+    license='Apache License, Version 2.0',
+    install_requires=[],
+    namespace_packages=['edgy'],
+    version=version,
+    long_description=read('README.rst'),
+    classifiers=read('classifiers.txt', tolines),
+    packages=find_packages(exclude=['ez_setup', 'example', 'test']),
+    include_package_data=True,
+    extras_require={
+        'dev': [
+            'coverage >=4.2,<4.3', 'mock >=2.0,<2.1', 'nose >=1.3,<1.4', 'pylint >=1.6,<1.7', 'pytest >=3.0,<3.1',
+            'pytest-cov >=2.3,<2.4', 'sphinx', 'sphinx_rtd_theme', 'yapf'
+        ]
+    },
+    url='https://github.com/python-edgy/event',
+    download_url='https://github.com/python-edgy/event/tarball/{version}'.format(version=version),
 )
