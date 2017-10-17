@@ -29,7 +29,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'edgy.event'
+project = 'whistle'
 copyright = '2016, Romain Dorgueil'
 author = 'Romain Dorgueil'
 
@@ -178,7 +178,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
-latex_documents = [('index', 'edgyevent.tex', 'edgy.event Documentation', 'Romain Dorgueil', 'manual'), ]
+latex_documents = [('index', 'edgyevent.tex', 'whistle Documentation', 'Romain Dorgueil', 'manual'), ]
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
@@ -204,7 +204,7 @@ latex_documents = [('index', 'edgyevent.tex', 'edgy.event Documentation', 'Romai
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [('index', 'edgyevent', 'edgy.event Documentation', ['Romain Dorgueil'], 1)]
+man_pages = [('index', 'edgyevent', 'whistle Documentation', ['Romain Dorgueil'], 1)]
 
 # If true, show URL addresses after external links.
 #man_show_urls = False
@@ -216,7 +216,7 @@ man_pages = [('index', 'edgyevent', 'edgy.event Documentation', ['Romain Dorguei
 #  dir menu entry, description, category)
 texinfo_documents = [
     (
-        'index', 'edgyevent', 'edgy.event Documentation', 'Romain Dorgueil', 'edgyevent',
+        'index', 'edgyevent', 'whistle Documentation', 'Romain Dorgueil', 'edgyevent',
         'One line description of project.', 'Miscellaneous'
     ),
 ]
@@ -236,13 +236,13 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = 'edgy.event'
+epub_title = 'Whistle'
 epub_author = 'Romain Dorgueil'
 epub_publisher = 'Romain Dorgueil'
 epub_copyright = '2016, Romain Dorgueil'
 
 # The basename for the epub file. It defaults to the project name.
-#epub_basename = 'edgy.event'
+#epub_basename = 'whistle'
 
 # The HTML theme for the epub output. Since the default themes are not optimized
 # for small screen space, using the same theme for HTML and epub output is

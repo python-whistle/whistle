@@ -1,36 +1,20 @@
-name = 'edgy.event'
-description = 'Event dispatcher'
-license = 'Apache License, Version 2.0'
+# bonobo (see github.com/python-edgy/project)
 
-# Project site and download urls
-url = 'https://github.com/python-edgy/event'
-download_url = 'https://github.com/python-edgy/event/tarball/{version}'
+from medikit import require
 
-# Author informations (for setup.py, not yet implemented)
-author = 'Romain Dorgueil'
-author_email = 'edgy@rdc.li'
+pytest = require('pytest')
+python = require('python')
+sphinx = require('sphinx')
+yapf = require('yapf')
 
-# Features
-enable_features = {
-    'git',
-    'make',
-    'pytest',
-    'python',
-    'sphinx',
-    'yapf',
-}
+python.setup(
+    name = 'whistle',
+    description = 'Event dispatcher for Python 3.5+',
+    license = 'Apache License, Version 2.0',
+    url = 'https://github.com/python-whistle/whistle',
+    download_url = 'https://github.com/python-whistle/whistle/tarball/{version}',
+    author = 'Romain Dorgueil',
+    author_email = 'romain@dorgueil.net',
+)
 
-extras_require = {
-    'dev': [
-        'coverage >=4.2,<4.3',
-        'mock >=2.0,<2.1',
-        'nose >=1.3,<1.4',
-        'pylint >=1.6,<1.7',
-        'pytest >=3.0,<3.1',
-        'pytest-cov >=2.3,<2.4',
-        'sphinx',
-        'sphinx_rtd_theme',
-        'yapf',
-    ]
-}
-
+# vim: ft=python:
