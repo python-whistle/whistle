@@ -102,7 +102,6 @@ class EventDispatcher(object):
         if event_id in self._listeners:
             self._sorted[event_id] = [
                 listener
-                for listeners in sorted(
-                    self._listeners[event_id].items(), key=operator.itemgetter(0)
-                ) for listener in listeners[1]
+                for listeners in sorted(self._listeners[event_id].items(), key=operator.itemgetter(0))
+                for listener in listeners[1]
             ]
