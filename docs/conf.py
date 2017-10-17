@@ -160,7 +160,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'edgyeventdoc'
+htmlhelp_basename = 'whistledoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -179,7 +179,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'edgyevent.tex', 'whistle Documentation', 'Romain Dorgueil', 'manual'),
+    ('index', 'whistle.tex', 'whistle Documentation', 'Romain Dorgueil', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -206,7 +206,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [('index', 'edgyevent', 'whistle Documentation', ['Romain Dorgueil'], 1)]
+man_pages = [('index', 'whistle', 'Whistle Documentation', ['Romain Dorgueil'], 1)]
 
 # If true, show URL addresses after external links.
 #man_show_urls = False
@@ -218,7 +218,7 @@ man_pages = [('index', 'edgyevent', 'whistle Documentation', ['Romain Dorgueil']
 #  dir menu entry, description, category)
 texinfo_documents = [
     (
-        'index', 'edgyevent', 'whistle Documentation', 'Romain Dorgueil', 'edgyevent',
+        'index', 'whistle', 'whistle Documentation', 'Romain Dorgueil', 'whistle',
         'One line description of project.', 'Miscellaneous'
     ),
 ]

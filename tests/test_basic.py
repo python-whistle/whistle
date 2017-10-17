@@ -6,7 +6,7 @@ try:
 except ImportError:
     import mock
 
-from edgy.event import Event, EventDispatcher
+from whistle import Event, EventDispatcher
 
 STRING_EVENT_ID = '42'
 OBJECT_EVENT_ID = object()

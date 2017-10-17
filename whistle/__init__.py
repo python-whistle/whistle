@@ -2,7 +2,7 @@
 
 from __future__ import absolute_import, unicode_literals, print_function
 
-from edgy.event.event import Event
-from edgy.event.dispatcher import EventDispatcher
+from whistle.event import Event
+from whistle.dispatcher import EventDispatcher
 
 __all__ = ['Event', 'EventDispatcher']

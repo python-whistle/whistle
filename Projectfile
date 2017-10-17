@@ -1,4 +1,4 @@
-# bonobo (see github.com/python-edgy/project)
+# whistle (see github.com/python-medikit/medikit)
 
 from medikit import require
 

@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import
-
 import operator
 
-from edgy.event.event import Event
+from whistle.event import Event
 
 
 class EventDispatcher(object):
