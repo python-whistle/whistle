@@ -1,0 +1,6 @@
+name: py35
+dependencies:
+- pip=9.0.1=py35_0
+- python=3.5.2=0
+- setuptools=20.3=py35_0
+- wheel=0.29.0=py35_0
