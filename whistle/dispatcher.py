@@ -4,6 +4,12 @@ from whistle.event import Event
 
 
 class EventDispatcher(object):
+    """
+    A logical event dispatcher. All events can only be dispatched in the context of an :class:`EventDispatcher`, and
+    event dispatchers are fully independant and isolated.
+
+    """
+
     def __init__(self):
         self._listeners = {}
         self._sorted = {}

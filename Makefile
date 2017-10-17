@@ -1,5 +1,7 @@
 # This file has been auto-generated.
 # All changes will be lost, see Projectfile.
+#
+# Updated at 2017-10-17 12:44:47.887368
 
 PACKAGE ?= whistle
 PYTHON ?= $(shell which python)

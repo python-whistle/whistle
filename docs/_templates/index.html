@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% set title = _('Whistle — Event Dispatcher.') %}
+
+{% block body %}
+<h1 style="text-align: center">
+    <img class="logo" src="{{ pathto('_static/whistle.png', 1) }}" title="Whistle" alt="Whistle"
+         style=" width: 128px; height: 128px;"/>
+</h1>
+
+<p>
+    {% trans %}
+    <b>Whistle</b> is a simple event dispatcher, inspired by Symfony's EventDispatcher component, but for the Python language.
+    {% endtrans %}
+</p>
+
+<h2 style="margin-bottom: 0">{% trans %}Documentation{% endtrans %}</h2>
+
+<table class="contentstable">
+    <tr>
+        <td>
+            <p class="biglink"><a class="biglink" href="{{ pathto("install") }}">{% trans %}Quick Start{% endtrans %}</a><br/>
+                <span class="linkdescr">{% trans %}how to install and use whistle{% endtrans %}</span></p>
+        </td>
+        <td>
+            <p class="biglink"><a class="biglink" href="{{ pathto("reference") }}">{% trans %}Reference{% endtrans %}</a><br/>
+                <span class="linkdescr">{% trans %}it's so light, the reference is one page!{% endtrans %}</span></p>
+        </td>
+    </tr>
+</table>
+
+<h2 style="margin-bottom: 0">{% trans %}Indexes{% endtrans %}</h2>
+
+<table class="contentstable">
+    <tr>
+        <td>
+            <p class="biglink"><a class="biglink" href="{{ pathto("search") }}">{% trans %}
+                Search{% endtrans %}</a><br/>
+                <span class="linkdescr">{% trans %}search the documentation{% endtrans %}</span></p>
+        </td>
+        <td>
+            <p class="biglink"><a class="biglink" href="{{ pathto("genindex") }}">{% trans %}Index{% endtrans %}</a><br/>
+                <span class="linkdescr">{% trans %}general index{% endtrans %}</span></p>
+        </td>
+    </tr>
+</table>
+
+{% endblock %}

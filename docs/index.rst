@@ -6,11 +6,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-Kick-start
-::::::::::
-
-Dive-in
-:::::::
+   install
+   reference
 
 Indices and tables
 ::::::::::::::::::
