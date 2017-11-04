@@ -52,8 +52,10 @@ setup(
     packages=find_packages(exclude=['ez_setup', 'example', 'test']),
     include_package_data=True,
     extras_require={
-        'dev':
-        ['coverage (>= 4.4, < 5.0)', 'pytest (>= 3.1, < 4.0)', 'pytest-cov (>= 2.5, < 3.0)', 'sphinx (>= 1.6, < 2.0)']
+        'dev': [
+            'coverage (>= 4.4, < 5.0)', 'pytest (>= 3.1, < 4.0)', 'pytest-cov (>= 2.5, < 3.0)',
+            'sphinx (>= 1.6, < 2.0)', 'yapf'
+        ]
     },
     url='https://github.com/python-whistle/whistle',
     download_url='https://github.com/python-whistle/whistle/tarball/{version}'.format(version=version),
