@@ -1,5 +1,3 @@
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpython-whistle%2Fwhistle.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpython-whistle%2Fwhistle?ref=badge_shield)
-
 Whistle
 =======
 
@@ -16,6 +14,10 @@ Whistle
     :target: http://whistle.readthedocs.org/en/latest/?badge=latest
     :alt: Documentation Status
 
+.. image:: https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpython-whistle%2Fwhistle.svg?type=shield
+    :target: https://app.fossa.io/projects/git%2Bgithub.com%2Fpython-whistle%2Fwhistle?ref=badge_shield
+    :alt: License Status
+
 
 Install
 :::::::
@@ -25,7 +27,9 @@ Install
    pip install whistle
 
 
+License
+:::::::
 
-
-## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpython-whistle%2Fwhistle.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpython-whistle%2Fwhistle?ref=badge_large)
+.. image:: https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpython-whistle%2Fwhistle.svg?type=large
+    :target: https://app.fossa.io/projects/git%2Bgithub.com%2Fpython-whistle%2Fwhistle?ref=badge_large
+    :alt: License Status
