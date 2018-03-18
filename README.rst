@@ -23,3 +23,34 @@ Install
    pip install whistle
 
 
+Quick start
+:::::::::::
+
+Install the `whistle` package:
+
+.. code-block:: shell-session
+
+    $ pip install whistle
+
+Create an event dispatcher:
+
+.. code-block:: python
+
+    from whistle import EventDispatcher
+
+    dispatcher = EventDispatcher()
+
+Add a listener to react to events
+
+.. code-block:: python
+
+    def on_spectacle_starts(event):
+        print('Please turn down your phones!')
+
+    dispatcher.add_listener('spectacle.starts', on_spectacle_starts)</code></pre>
+
+Dispatch!
+
+.. code-block:: python
+
+    dispatcher.dispatch('spectacle.starts')
