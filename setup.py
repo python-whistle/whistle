@@ -44,9 +44,10 @@ else:
 setup(
     author='Romain Dorgueil',
     author_email='romain@dorgueil.net',
-    description='Event dispatcher for Python 3.5+',
+    description='Event dispatcher (see python-whistle.github.io).',
     license='Apache License, Version 2.0',
     name='whistle',
+    python_requires='>=3.5',
     version=version,
     long_description=long_description,
     classifiers=classifiers,
@@ -58,6 +59,6 @@ setup(
             'yapf'
         ]
     },
-    url='https://github.com/python-whistle/whistle',
+    url='https://python-whistle.github.io/',
     download_url='https://github.com/python-whistle/whistle/tarball/{version}'.format(version=version),
 )

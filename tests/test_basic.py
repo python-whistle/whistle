@@ -61,9 +61,9 @@ def test_propagation():
     dispatcher = EventDispatcher()
 
     for event_id in (
-            STRING_EVENT_ID,
-            OBJECT_EVENT_ID,
-            NUMERIC_EVENT_ID,
+        STRING_EVENT_ID,
+        OBJECT_EVENT_ID,
+        NUMERIC_EVENT_ID,
     ):
         listener1 = mock.MagicMock()
 
@@ -96,9 +96,9 @@ def test_propagation():
     listeners = dispatcher.get_listeners()
     assert len(listeners) == 3
     for event_id in (
-            STRING_EVENT_ID,
-            OBJECT_EVENT_ID,
-            NUMERIC_EVENT_ID,
+        STRING_EVENT_ID,
+        OBJECT_EVENT_ID,
+        NUMERIC_EVENT_ID,
     ):
         assert len(listeners[event_id]) == 3
 
@@ -106,9 +106,9 @@ def test_propagation():
 def test_no_listener():
     dispatcher = EventDispatcher()
     for event_id in (
-            STRING_EVENT_ID,
-            OBJECT_EVENT_ID,
-            NUMERIC_EVENT_ID,
+        STRING_EVENT_ID,
+        OBJECT_EVENT_ID,
+        NUMERIC_EVENT_ID,
     ):
         assert not dispatcher.has_listeners(event_id)
 
@@ -120,9 +120,9 @@ def test_remove_listener():
     dispatcher = EventDispatcher()
 
     for event_id in (
-            STRING_EVENT_ID,
-            OBJECT_EVENT_ID,
-            NUMERIC_EVENT_ID,
+        STRING_EVENT_ID,
+        OBJECT_EVENT_ID,
+        NUMERIC_EVENT_ID,
     ):
         listener = mock.MagicMock()
         assert not dispatcher.has_listeners(event_id)
@@ -150,9 +150,9 @@ def test_listen_decorator():
     dispatcher = EventDispatcher()
 
     for event_id in (
-            STRING_EVENT_ID,
-            OBJECT_EVENT_ID,
-            NUMERIC_EVENT_ID,
+        STRING_EVENT_ID,
+        OBJECT_EVENT_ID,
+        NUMERIC_EVENT_ID,
     ):
         listener = mock.MagicMock()
         dispatcher.listen(event_id)(listener)
