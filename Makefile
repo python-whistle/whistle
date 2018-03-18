@@ -55,7 +55,7 @@ else
 endif
 
 clean:   ## Cleans up the local mess.
-	rm -rf .medikit .release build dist *.egg-info
+	rm -rf build dist *.egg-info
 	find . -name __pycache__ -type d | xargs rm -rf
 
 quick:   #
