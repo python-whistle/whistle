@@ -4,9 +4,6 @@ Whistle
 `Whistle` is a lightweight python library that allow your application components to communicate with each other by
 dispatching events and listening to them.
 
-* Homepage: https://python-whistle.github.io/
-* Issues: https://github.com/python-whistle/whistle/issues
-
 .. image:: https://travis-ci.org/python-whistle/whistle.svg?branch=master
     :target: https://travis-ci.org/python-whistle/whistle
 
@@ -21,6 +18,9 @@ dispatching events and listening to them.
 .. image:: https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpython-whistle%2Fwhistle.svg?type=shield
     :target: https://app.fossa.io/projects/git%2Bgithub.com%2Fpython-whistle%2Fwhistle?ref=badge_shield
     :alt: License Status
+
+* Homepage: https://python-whistle.github.io/
+* Issues: https://github.com/python-whistle/whistle/issues
 
 
 Install
