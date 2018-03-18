@@ -2,10 +2,11 @@
 *.iml
 *.pyc
 *.swp
+.DS_Store
 /.cache
 /.coverage
 /.idea
-/.medikit-pipeline
+/.medikit
 /.release
 /.virtualenv-python*
 /.wheels
