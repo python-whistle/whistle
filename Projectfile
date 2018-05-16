@@ -19,6 +19,7 @@ python.setup(
     author_email='romain@dorgueil.net',
 )
 
+
 # Pipelines
 @listen(make.on_generate)
 def on_make_generate_pipelines(event):
@@ -30,5 +31,6 @@ def on_make_generate_pipelines(event):
         phony=True,
         doc='Runs the "release" pipeline.'
     )
+
 
 # vim: ft=python:
