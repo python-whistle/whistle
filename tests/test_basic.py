@@ -159,6 +159,10 @@ def test_remove_listener():
     ):
         listener = mock.MagicMock()
         assert not dispatcher.has_listeners(event_id)
+
+        dispatcher.remove_listener(event_id, listener)
+        assert not dispatcher.has_listeners(event_id)
+        
         dispatcher.add_listener(event_id, listener)
         assert dispatcher.has_listeners(event_id)
 
