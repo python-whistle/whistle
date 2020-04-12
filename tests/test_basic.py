@@ -7,6 +7,9 @@ from whistle import Event, EventDispatcher
 STRING_EVENT_ID = '42'
 OBJECT_EVENT_ID = object()
 NUMERIC_EVENT_ID = 42
+STRING_PARAMETER = 'str'
+INTEGER_PARAMETER = 42
+OBJECT_PARAMETER = object()
 
 
 class CustomEvent(Event):
@@ -51,10 +54,40 @@ def test_dispatcher_custom_event(EventType, event_id):
     event = EventType()
 
     dispatcher.add_listener(event_id, listener)
-    e = dispatcher.dispatch(event_id, event)
+    e = dispatcher.dispatch(event_id, event=event)
 
     assert listener.call_count == 1
     assert e == event
+
+
+@pytest.mark.parametrize('event_id', [STRING_EVENT_ID, OBJECT_EVENT_ID, NUMERIC_EVENT_ID])
+@pytest.mark.parametrize('param_1', [STRING_PARAMETER, INTEGER_PARAMETER, OBJECT_PARAMETER])
+@pytest.mark.parametrize('param_2', [STRING_PARAMETER, INTEGER_PARAMETER, OBJECT_PARAMETER])
+def test_dispatcher_with_args(event_id, param_1, param_2):
+    dispatcher = EventDispatcher()
+    listener = mock.MagicMock()
+
+    dispatcher.add_listener(event_id, listener)
+    e = dispatcher.dispatch(event_id, param_1, param_2)
+
+    assert listener.call_count == 1
+    assert (listener.call_args) == ((e, param_1, param_2),)
+
+
+@pytest.mark.parametrize('EventType', [Event, CustomEvent])
+@pytest.mark.parametrize('event_id', [STRING_EVENT_ID, OBJECT_EVENT_ID, NUMERIC_EVENT_ID])
+@pytest.mark.parametrize('param_1', [STRING_PARAMETER, INTEGER_PARAMETER, OBJECT_PARAMETER])
+@pytest.mark.parametrize('param_2', [STRING_PARAMETER, INTEGER_PARAMETER, OBJECT_PARAMETER])
+def test_dispatcher_custom_event_with_args(EventType, event_id, param_1, param_2):
+    dispatcher = EventDispatcher()
+    listener = mock.MagicMock()
+    event = EventType()
+
+    dispatcher.add_listener(event_id, listener)
+    e = dispatcher.dispatch(event_id, param_1, param_2, event=event)
+
+    assert listener.call_count == 1
+    assert (listener.call_args) == ((e, param_1, param_2),)
 
 
 def test_propagation():

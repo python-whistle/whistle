@@ -14,7 +14,7 @@ class EventDispatcher(object):
         self._listeners = {}
         self._sorted = {}
 
-    def dispatch(self, event_id, event=None):
+    def dispatch(self, event_id, *args, event=None):
         if event is None:
             event = Event()
 
@@ -24,7 +24,7 @@ class EventDispatcher(object):
         if not event_id in self._listeners:
             return event
 
-        self.do_dispatch(self.get_listeners(event_id), event)
+        self.do_dispatch(self.get_listeners(event_id), event, *args)
 
         return event
 
@@ -94,9 +94,9 @@ class EventDispatcher(object):
                 if event_id in self._sorted:
                     del self._sorted[event_id]
 
-    def do_dispatch(self, listeners, event):
+    def do_dispatch(self, listeners, event, *args):
         for listener in listeners:
-            listener(event)
+            listener(event, *args)
             if event.propagation_stopped: break
 
     def sort_listeners(self, event_id):
