@@ -1,58 +1,50 @@
-import operator
+from functools import cached_property
 
 from whistle.event import Event
+from whistle.listeners import ListenersCollection
 
 
 class EventDispatcher(object):
     """
-    A logical event dispatcher. All events can only be dispatched in the context of an :class:`EventDispatcher`, and
-    event dispatchers are fully independant and isolated.
+    Main class of the library, it is responsible for keeping track of registered listeners, and dispatching events to
+    them. All listeners are scoped to the event dispatcher instance, so you can have multiple event dispatchers with
+    different sets of listeners.
 
     """
 
     def __init__(self):
-        self._listeners = {}
+        self._listeners = ListenersCollection()
+        self._old_listeners = {}
         self._sorted = {}
 
-    def dispatch(self, event_id, event=None):
+    @cached_property
+    def listeners(self):
+        # todo test we cannot change reference
+        return self._listeners
+
+    def dispatch(self, event_id, event=None, /):
+        """
+        Dispatch the given event, with the given event id.
+
+        An optional event can be given, and should respect the :class:`whistle.protocols.IEvent` protocol.
+        If no event is given, a new :class:`whistle.event.Event` instance is created and used.
+
+        Returns the event instance after it has been dispatched, whether it has been created or provided by the caller.
+
+        :param event_id: hashable identifier for the event
+        :param event: optional event instance
+        :return: the event instance after it has been dispatched
+
+        """
         if event is None:
             event = Event()
 
         event.dispatcher = self
         event.name = event_id
 
-        if not event_id in self._listeners:
-            return event
-
-        self.do_dispatch(self.get_listeners(event_id), event)
+        self.do_dispatch(self._listeners.get(event_id), event)
 
         return event
-
-    def get_listeners(self, event_id=None):
-        if event_id is not None:
-            if not event_id in self._sorted:
-                self.sort_listeners(event_id)
-
-            return self._sorted[event_id]
-
-        for event_id in self._listeners:
-            if not event_id in self._sorted:
-                self.sort_listeners(event_id)
-
-        return self._sorted
-
-    def has_listeners(self, event_id=None):
-        return bool(len(self.get_listeners(event_id)))
-
-    def add_listener(self, event_id, listener, priority=0):
-        if not event_id in self._listeners:
-            self._listeners[event_id] = {}
-        if not priority in self._listeners[event_id]:
-            self._listeners[event_id][priority] = []
-        self._listeners[event_id][priority].append(listener)
-
-        if event_id in self._sorted:
-            del self._sorted[event_id]
 
     def listen(self, event_id, priority=0):
         """
@@ -65,44 +57,62 @@ class EventDispatcher(object):
         """
 
         def wrapper(listener):
-            self.add_listener(event_id, listener, priority)
+            self._listeners.add(event_id, listener, priority=priority)
             return listener
 
         return wrapper
 
-    def remove_listener(self, event_id, listener):
-        """
-        Remove a fiven listener from this event dispatcher. For now, if the listener is not registered for this event,
-        this method has no effect, but we may raise ValueError in the future if the given listener is not found, you
-        should catch it if you're not certain the listener is registered.
-
-        TODO raise ValueError if not found.
-
-        :param event_id:
-        :param listener:
-        :return:
-        """
-        if not event_id in self._listeners:
-            return
-
-        for priority, listeners in self._listeners[event_id].items():
-            if listener in self._listeners[event_id][priority]:
-                # pylint: disable=filter-builtin-not-iterating
-                self._listeners[event_id][priority] = list(
-                    filter(lambda l: l != listener, self._listeners[event_id][priority])
-                )
-                if event_id in self._sorted:
-                    del self._sorted[event_id]
-
     def do_dispatch(self, listeners, event):
         for listener in listeners:
             listener(event)
-            if event.propagation_stopped: break
+            if event.propagation_stopped:
+                break
 
-    def sort_listeners(self, event_id):
-        self._sorted[event_id] = []
-        if event_id in self._listeners:
-            self._sorted[event_id] = [
-                listener for listeners in sorted(self._listeners[event_id].items(), key=operator.itemgetter(0))
-                for listener in listeners[1]
-            ]
+    def get_listeners(self, event_id=None):
+        # deprecated compatibility method
+        return self._listeners.get(event_id)
+
+    def has_listeners(self, event_id=None):
+        # deprecated compatibility method
+        return self._listeners.has(event_id)
+
+    def add_listener(self, event_id, listener, priority=0):
+        # deprecated compatibility method
+        return self._listeners.add(event_id, listener, priority=priority)
+
+    def remove_listener(self, event_id, listener):
+        # deprecated compatibility method
+        return self._listeners.remove(event_id, listener)
+
+
+class AsyncEventDispatcher(EventDispatcher):
+    """
+    Adapts whiste's EventDispatcher to be async. Probably should go into whistle 2.x?
+    """
+
+    async def do_dispatch(self, listeners, event):
+        for listener in listeners:
+            await listener(event)
+            if event.propagation_stopped:
+                break
+
+    async def dispatch(self, event_id, event=None):
+        """
+        todo: add this as dispatch_async in whistle 2.0 ?
+
+        :param event_id:
+        :param event:
+        :return:
+        """
+        if event is None:
+            event = Event()
+
+        event.dispatcher = self
+        event.name = event_id
+
+        if event_id not in self._listeners:
+            return event
+
+        await self.do_dispatch(self.get_listeners(event_id), event)
+
+        return event

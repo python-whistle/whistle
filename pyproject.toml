@@ -1,0 +1,35 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "whistle"
+version = "2.0-dev"
+description = "Event dispatcher (see python-whistle.github.io)."
+authors = ["Romain Dorgueil <romain@makersquad.fr>"]
+readme = "README.rst"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<4.0"
+
+[tool.poetry.group.dev.dependencies]
+coverage = "^4.4"
+pre-commit = "^3.6.0"
+pytest = "^7.4.3"
+pytest-asyncio = "^0.23.2"
+pytest-cov = "^4.1.0"
+sphinx = "^7.2.6"
+
+[tool.ruff]
+line-length = 120
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+line_length = 120
+py_version = 311
+profile = "black"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
