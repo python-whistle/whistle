@@ -13,12 +13,13 @@ readme = "README.rst"
 python = ">=3.9,<4.0"
 
 [tool.poetry.group.dev.dependencies]
-coverage = "^4.4"
+coverage = "^7.4.0"
 pre-commit = "^3.6.0"
 pytest = "^7.4.3"
 pytest-asyncio = "^0.23.2"
 pytest-cov = "^4.1.0"
 sphinx = "^7.2.6"
+pytest-benchmark = "^4.0.0"
 
 [tool.ruff]
 line-length = 120

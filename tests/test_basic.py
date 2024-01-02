@@ -8,6 +8,8 @@ STRING_EVENT_ID = "42"
 OBJECT_EVENT_ID = object()
 NUMERIC_EVENT_ID = 42
 
+
+# todo deprecated: although it still works, event ids should be strings
 BUNCH_OF_EVENT_IDS = [STRING_EVENT_ID, OBJECT_EVENT_ID, NUMERIC_EVENT_ID]
 
 
