@@ -20,7 +20,7 @@ SPHINX_BUILDDIR ?= $(SPHINX_SOURCEDIR)/_build
 YAPF ?= $(PYTHON) -m yapf
 YAPF_OPTIONS ?= -rip
 
-.PHONY: $(SPHINX_SOURCEDIR) clean format help install install-dev release test benchmarks
+.PHONY: $(SPHINX_SOURCEDIR) clean format help install install-dev release test benchmarks qa
 
 install:  ## Installs the project.
 	$(POETRY) install --only main
@@ -37,6 +37,8 @@ test: install-dev  ## Runs the test suite.
 
 benchmarks: install-dev  ## Runs the benchmark suite.
 	$(PYTEST) $(PYTEST_OPTIONS) --benchmark-only tests
+
+qa: clean format test benchmarks
 
 $(SPHINX_SOURCEDIR): install-dev  ##
 	$(SPHINX_BUILD) -b html -D latex_paper_size=a4 $(SPHINX_OPTIONS) $(SPHINX_SOURCEDIR) $(SPHINX_BUILDDIR)/html

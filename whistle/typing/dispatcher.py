@@ -1,10 +1,21 @@
-from typing import Protocol
+from typing import Optional, Protocol
 
 from .event import IEvent
+from .listener import IListener
 
 
 class IAbstractEventDispatcher(Protocol):
-    ...
+    def get_listeners(self, event_id: Optional[str] = None, /):
+        ...
+
+    def has_listeners(self, event_id: Optional[str] = None, /):
+        ...
+
+    def add_listener(self, event_id: str, listener: IListener, /, *, priority: int = 0):
+        ...
+
+    def remove_listener(self, event_id: str, listener: IListener, /):
+        ...
 
 
 class IDispatchedEvent(IEvent, Protocol):

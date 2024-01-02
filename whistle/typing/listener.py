@@ -1,5 +1,6 @@
-from typing import Any, Callable
+from typing import Any, Callable, Coroutine
 
 from .event import IEvent
 
-IListener = Callable[[IEvent], Any]
+# todo: async vs sync listeners to help IDEs more ?
+IListener = Callable[[IEvent], Any | Coroutine]

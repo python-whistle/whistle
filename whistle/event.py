@@ -8,6 +8,9 @@ class Event(object):
 
     """
 
+    name = None
+    """Event name placeholder, will be set by dispatcher."""
+
     propagation_stopped = False
     """Has the event propagation ended?"""
 
