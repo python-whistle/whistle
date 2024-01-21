@@ -8,7 +8,10 @@ from whistle.typing import IDispatchedEvent, IEvent, IListener
 
 class AsyncEventDispatcher(AbstractEventDispatcher):
     """
-    Adapts whiste's EventDispatcher to be async. Probably should go into whistle 2.x?
+    Adapts whiste's EventDispatcher to be async.
+
+    .. versionadded:: 2.0
+
     """
 
     def add_listener(self, event_id: str, listener: IListener, /, *, priority: int = 0):
@@ -21,8 +24,6 @@ class AsyncEventDispatcher(AbstractEventDispatcher):
 
     async def adispatch(self, event_id: str, event: Optional[IEvent] = None, /) -> IDispatchedEvent:
         """
-        todo: add this as dispatch_async in whistle 2.0 ?
-
         :param event_id:
         :param event:
         :return:

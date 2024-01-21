@@ -29,5 +29,5 @@ class IEventDispatcher(IAbstractEventDispatcher, Protocol):
 
 
 class IAsyncEventDispatcher(IAbstractEventDispatcher, Protocol):
-    async def adispatch(self, event_id, event=None, /) -> IDispatchedEvent:
+    async def adispatch(self, event_id: str, event: Optional[IEvent] = None, /) -> IDispatchedEvent:
         ...
