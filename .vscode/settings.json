@@ -1,0 +1,9 @@
+{
+  "files.exclude": {
+    "build": true,
+    "*.egg-info": true
+  },
+  "python.testing.pytestArgs": ["tests"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true
+}
