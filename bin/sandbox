@@ -1,0 +1,52 @@
+#! /bin/bash
+#
+# This script will execute something in a clean copy of the local git repository, pinned to HEAD's commit.
+# It's mostly useful to ensure that a local build completely ignore local changes and non versionned files, helping
+# builds to be more predictible.
+#
+# Usage: bin/sandbox some-command with some args
+#
+# Brought to you by Makersquad and licensed under the DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE, version 2.
+#
+
+__PATH__=$(cd $(dirname "$0")/..; pwd)
+
+# Exit if something fails
+set -e
+
+# Verbose
+set -x
+
+# Set version
+export VERSION=`git describe 2>/dev/null || git rev-parse --short HEAD`
+
+# If there are local changes, force the user to clean things up (he may not expect his changes to be ignored, so
+# it's better that he choses to stash, revert or commit the things).
+git diff-index --quiet --cached HEAD -- || {
+  echo "Repository not clean, please explicitely act so I am certain you're not ignoring something you expected to have in your sandbox."
+  exit 1
+}
+
+# Create temporary sandbox and trap removal at exit
+SANDBOX=`mktemp -d`
+echo "Created sandbox directory: $SANDBOX"
+function cleanup {
+  rm -rf $SANDBOX
+  echo "Removed sandbox directory: $SANDBOX."
+}
+trap cleanup EXIT
+
+# Release path
+RELEASE=$SANDBOX/release
+
+# Clean clone
+(cd $SANDBOX; git clone $__PATH__ release --no-checkout)
+(cd $RELEASE; git checkout $VERSION)
+(cd $RELEASE; git submodule update --init --recursive)
+(cd $RELEASE; rm -rf .git)
+(cd $RELEASE; touch .env)
+(cd $RELEASE; echo $VERSION > version.txt)
+
+# Execute
+ARGS="$*"
+(cd $RELEASE; bash -c "$ARGS" )

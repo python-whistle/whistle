@@ -19,7 +19,7 @@ SPHINX_BUILDDIR ?= $(SPHINX_SOURCEDIR)/_build
 YAPF ?= $(PYTHON) -m yapf
 YAPF_OPTIONS ?= -rip
 
-.PHONY: $(SPHINX_SOURCEDIR) clean format help install install-dev release test benchmarks qa
+.PHONY: $(SPHINX_SOURCEDIR) clean clean-dist format help install install-dev release test benchmarks qa
 
 install:  ## Installs the project.
 	$(POETRY) install --only main
@@ -27,9 +27,15 @@ install:  ## Installs the project.
 install-dev:  ## Installs the project (with dev dependencies).
 	$(POETRY) install
 
-clean:   ## Cleans up the working copy.
-	rm -rf build dist *.egg-info .cache/install .cache/install-dev
+wheel:
+	mkdir -p dist
+	bin/sandbox "$(MAKE) install-dev; $(POETRY) build; cp dist/* $(PWD)/dist"
+
+clean: clean-dist  ## Cleans up the working copy.
 	find . -name __pycache__ -type d | xargs rm -rf
+
+clean-dist:  ## Cleans up the distribution files (wheels...)
+	rm -rf build dist *.egg-info
 
 test: install-dev  ## Runs the test suite.
 	$(POETRY) run pytest $(PYTEST_OPTIONS) --benchmark-disable tests
