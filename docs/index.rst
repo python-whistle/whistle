@@ -7,7 +7,7 @@ Contents:
    :maxdepth: 2
 
    install
-   reference
+   reference/whistle
 
 Indices and tables
 ::::::::::::::::::

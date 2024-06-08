@@ -19,7 +19,7 @@ SPHINX_BUILDDIR ?= $(SPHINX_SOURCEDIR)/_build
 YAPF ?= $(PYTHON) -m yapf
 YAPF_OPTIONS ?= -rip
 
-.PHONY: $(SPHINX_SOURCEDIR) clean clean-dist format help install install-dev release test benchmarks qa
+.PHONY: $(SPHINX_SOURCEDIR) clean clean-dist apidoc format help install install-dev release test benchmarks qa
 
 install:  ## Installs the project.
 	$(POETRY) install --only main
@@ -37,13 +37,17 @@ clean: clean-dist  ## Cleans up the working copy.
 clean-dist:  ## Cleans up the distribution files (wheels...)
 	rm -rf build dist *.egg-info
 
+apidoc:  ## Generate api doc
+	rm -rf docs/reference;
+	$(POETRY) run bin/generate_apidoc
+
 test: install-dev  ## Runs the test suite.
 	$(POETRY) run pytest $(PYTEST_OPTIONS) --benchmark-disable tests
 
 benchmarks: install-dev  ## Runs the benchmark suite.
 	$(PYTEST) $(PYTEST_OPTIONS) --benchmark-only tests
 
-qa: clean format test benchmarks
+qa: clean apidoc format test benchmarks
 
 $(SPHINX_SOURCEDIR): install-dev  ##
 	$(SPHINX_BUILD) -b html -D latex_paper_size=a4 $(SPHINX_OPTIONS) $(SPHINX_SOURCEDIR) $(SPHINX_BUILDDIR)/html
