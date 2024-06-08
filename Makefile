@@ -11,7 +11,6 @@ PIP ?= $(PYTHON) -m pip
 PIP_INSTALL_OPTIONS ?=
 POETRY ?= $(shell which poetry || echo poetry)
 VERSION ?= $(shell git describe 2>/dev/null || git rev-parse --short HEAD)
-PYTEST ?= $(PYTHON_DIRNAME)/pytest
 PYTEST_OPTIONS ?= --capture=no --cov=$(PACKAGE) --cov-report html
 SPHINX_BUILD ?= $(PYTHON_DIRNAME)/sphinx-build
 SPHINX_OPTIONS ?=
@@ -33,7 +32,7 @@ clean:   ## Cleans up the working copy.
 	find . -name __pycache__ -type d | xargs rm -rf
 
 test: install-dev  ## Runs the test suite.
-	$(PYTEST) $(PYTEST_OPTIONS) --benchmark-disable tests
+	$(POETRY) run pytest $(PYTEST_OPTIONS) --benchmark-disable tests
 
 benchmarks: install-dev  ## Runs the benchmark suite.
 	$(PYTEST) $(PYTEST_OPTIONS) --benchmark-only tests
