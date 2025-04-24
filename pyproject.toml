@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "whistle"
-version = "2.0.0b1"
+version = "2.0.0"
 description = "Event dispatcher (see python-whistle.github.io)."
 authors = ["Romain Dorgueil <romain@makersquad.fr>"]
 readme = "README.rst"
