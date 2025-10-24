@@ -1,0 +1,129 @@
+Release Process
+===============
+
+This document describes the process for releasing a new version of Whistle.
+
+Prerequisites
+-------------
+
+Before releasing, ensure you have:
+
+* Push access to the GitHub repository
+* All changes merged to the ``main`` branch
+* All tests passing on CI
+
+The release process is fully automated via GitHub Actions. You only need to create and push a git tag.
+
+Release Steps
+-------------
+
+1. **Ensure everything is ready**
+
+   Run tests locally to verify everything works:
+
+   .. code-block:: bash
+
+      make test
+      make format
+
+2. **Create a git tag**
+
+   Create a tag following semantic versioning (e.g., ``2.0.2``, ``2.1.0-rc1``):
+
+   .. code-block:: bash
+
+      git tag 2.0.2
+      # Or for a release candidate:
+      git tag 2.1.0-rc1
+
+3. **Push the tag to GitHub**
+
+   .. code-block:: bash
+
+      git push origin 2.0.2
+
+4. **GitHub Actions takes over**
+
+   Once the tag is pushed, the Release workflow automatically:
+
+   * Updates the version in ``pyproject.toml``
+   * Builds the Python package (wheel and sdist)
+   * Tests the package on Python 3.9-3.13
+   * Publishes to TestPyPI
+   * Publishes to PyPI
+   * Creates a GitHub Release with the built artifacts
+
+5. **Monitor the release**
+
+   Watch the GitHub Actions workflow at:
+   https://github.com/msqd/whistle/actions
+
+   The workflow typically takes 5-10 minutes to complete.
+
+6. **Verify the release**
+
+   Once complete, verify the release:
+
+   * Check PyPI: https://pypi.org/project/whistle/
+   * Check GitHub Releases: https://github.com/msqd/whistle/releases
+   * Test installation: ``pip install whistle==2.0.2``
+
+Version Naming
+--------------
+
+Follow semantic versioning:
+
+* **Stable releases**: ``X.Y.Z`` (e.g., ``2.0.2``, ``2.1.0``)
+* **Release candidates**: ``X.Y.Z-rcN`` (e.g., ``2.1.0-rc1``)
+* **Beta releases**: ``X.Y.Z-betaN`` (e.g., ``2.1.0-beta1``)
+* **Alpha releases**: ``X.Y.Z-alphaN`` (e.g., ``2.1.0-alpha1``)
+
+Pre-release versions (rc, beta, alpha) are automatically marked as pre-releases on GitHub.
+
+Troubleshooting
+---------------
+
+**Release workflow fails**
+
+1. Check the GitHub Actions logs for errors
+2. Fix any issues in the code
+3. Delete the failed tag both locally and on GitHub:
+
+   .. code-block:: bash
+
+      git tag -d 2.0.2
+      git push origin :refs/tags/2.0.2
+
+4. Create and push the tag again after fixing issues
+
+**PyPI credentials issues**
+
+The release workflow uses GitHub's trusted publishing (OIDC). No manual credentials are needed.
+If publishing fails, verify the PyPI trusted publisher configuration at:
+https://pypi.org/manage/account/publishing/
+
+Manual Build (Testing)
+----------------------
+
+To test the build process locally without publishing:
+
+.. code-block:: bash
+
+   make wheel
+
+This creates distribution files in the ``dist/`` directory using an isolated sandbox environment.
+
+Emergency Rollback
+------------------
+
+If a release has critical issues:
+
+1. **Do not delete the PyPI release** (PyPI does not allow re-uploading the same version)
+2. Instead, release a new patch version with the fix
+3. Optionally mark the problematic release as yanked on PyPI (prevents new installs but doesn't break existing ones)
+
+For yanking a release on PyPI:
+
+1. Go to https://pypi.org/project/whistle/
+2. Select the problematic version
+3. Click "Options" → "Yank release"

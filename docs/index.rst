@@ -7,6 +7,7 @@ Contents:
    :maxdepth: 2
 
    install
+   release
    reference/whistle
 
 Indices and tables
