@@ -1,0 +1,178 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*.*.*'      # Semantic version tags (e.g., 2.0.0)
+      - '*.*.*-*'    # Pre-release tags (e.g., 2.0.0-rc1, 2.0.0-beta.1)
+
+permissions:
+  contents: write  # Required for creating GitHub releases
+  id-token: write  # Required for trusted publishing to PyPI
+
+jobs:
+  build:
+    name: Build Python package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Building version: $VERSION"
+
+      - name: Update version in pyproject.toml
+        run: |
+          sed -i 's/^version = .*/version = "${{ steps.version.outputs.version }}"/' pyproject.toml
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pyproject.toml
+          git commit -m "chore: set version to ${{ steps.version.outputs.version }} for release build"
+          echo "Updated and committed version ${{ steps.version.outputs.version }}"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+
+      - name: Build package
+        run: uv build
+
+      - name: Upload wheel artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+          retention-days: 7
+
+  test-package:
+    name: Test built package
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Download wheel artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install and test wheel
+        run: |
+          WHEEL=$(ls dist/*.whl)
+          echo "Testing wheel: $WHEEL"
+          uv pip install --system "$WHEEL"
+          python -c "import whistle; print(f'whistle version: {whistle.__version__ if hasattr(whistle, \"__version__\") else \"unknown\"}')"
+
+  publish-testpypi:
+    name: Publish to TestPyPI
+    needs: test-package
+    runs-on: ubuntu-latest
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/whistle
+    permissions:
+      id-token: write
+    steps:
+      - name: Download wheel artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+
+  publish-pypi:
+    name: Publish to PyPI
+    needs: publish-testpypi
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/whistle
+    permissions:
+      id-token: write
+    steps:
+      - name: Download wheel artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    name: Create GitHub Release
+    needs: publish-pypi
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download wheel artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+
+      - name: Create release notes
+        run: |
+          cat > changes.md <<EOF
+          # Release ${{ steps.version.outputs.version }}
+
+          This release was automatically created from tag ${{ github.ref_name }}.
+
+          ## Installation
+
+          \`\`\`bash
+          pip install whistle==${{ steps.version.outputs.version }}
+          \`\`\`
+
+          See the [documentation](https://python-whistle.github.io/) for more information.
+          EOF
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: changes.md
+          files: dist/*
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}

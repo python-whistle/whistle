@@ -1,41 +1,49 @@
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.poetry]
+[project]
 name = "whistle"
-version = "2.0.0"
+version = "2.0.1"
 description = "Event dispatcher (see python-whistle.github.io)."
-authors = ["Romain Dorgueil <romain@makersquad.fr>"]
+authors = [
+    {name = "Romain Dorgueil", email = "romain@makersquad.fr"}
+]
 readme = "README.rst"
+requires-python = ">=3.9"
+dependencies = []
 
-[tool.poetry.dependencies]
-python = ">=3.9,<4.0"
+[dependency-groups]
+dev = [
+    "coverage>=7.5.3",
+    "pre-commit>=3.7.1",
+    "pytest>=7.4.4",
+    "pytest-asyncio>=0.23.2",
+    "pytest-cov>=4.1.0",
+    "sphinx>=7.3.7",
+    "pytest-benchmark>=4.0.0",
+    "furo>=2024.5.6",
+    "sphinx-copybutton>=0.5.2",
+    "sphinx-design>=0.6.0",
+    "sphinx-sitemap>=2.6.0",
+    "sphinxcontrib-jquery>=4.1",
+    "ruff>=0.14,<0.15",
+]
 
-[tool.poetry.group.dev.dependencies]
-coverage = "^7.5.3"
-pre-commit = "^3.7.1"
-pytest = "^7.4.4"
-pytest-asyncio = "^0.23.2"
-pytest-cov = "^4.1.0"
-sphinx = "^7.3.7"
-pytest-benchmark = "^4.0.0"
-furo = "^2024.5.6"
-sphinx-copybutton = "^0.5.2"
-sphinx-design = "^0.6.0"
-sphinx-sitemap = "^2.6.0"
-sphinxcontrib-jquery = "^4.1"
+[tool.uv]
+default-groups = ["dev"]
 
 [tool.ruff]
 line-length = 120
 
-[tool.black]
-line-length = 120
+[tool.ruff.format]
+docstring-code-format = true
 
-[tool.isort]
-line_length = 120
-py_version = 311
-profile = "black"
+[tool.ruff.lint]
+ignore = ["F403"]  # Allow star imports for public API exposure
+
+[tool.ruff.lint.isort]
+known-first-party = ["whistle"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

@@ -48,7 +48,7 @@ def test_add_benchmark(benchmark):
 
     @benchmark
     def add():
-        coll.add(f"event{randint(1,10)}", lambda e: None)
+        coll.add(f"event{randint(1, 10)}", lambda e: None)
 
 
 @pytest.mark.benchmark
@@ -56,7 +56,7 @@ def test_get_benchmark(benchmark):
     coll = ListenersCollection()
     event_ids = set()
     for i in range(1000):
-        event_id = f"event_randint(1,10)"
+        event_id = "event_randint(1,10)"
         coll.add(event_id, lambda e: None)
         event_ids.add(event_id)
     event_ids = list(event_ids)

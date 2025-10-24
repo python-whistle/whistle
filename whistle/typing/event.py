@@ -5,5 +5,4 @@ class IEvent(Protocol):
     name: str
     propagation_stopped: bool
 
-    def stop_propagation(self):
-        ...
+    def stop_propagation(self): ...

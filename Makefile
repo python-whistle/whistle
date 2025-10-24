@@ -1,35 +1,24 @@
 PACKAGE ?= whistle
-PYTHON ?= $(shell which python || echo python)
-PYTHON_BASENAME ?= $(shell basename $(PYTHON))
-PYTHON_DIRNAME ?= $(shell dirname $(PYTHON))
-PYTHON_REQUIREMENTS_FILE ?= requirements.txt
-PYTHON_REQUIREMENTS_INLINE ?=
-PYTHON_REQUIREMENTS_DEV_FILE ?= requirements-dev.txt
-PYTHON_REQUIREMENTS_DEV_INLINE ?=
-QUICK ?=
-PIP ?= $(PYTHON) -m pip
-PIP_INSTALL_OPTIONS ?=
-POETRY ?= $(shell which poetry || echo poetry)
+UV ?= $(shell which uv || echo uv)
+UVX ?= $(shell which uvx || echo uvx)
 VERSION ?= $(shell git describe 2>/dev/null || git rev-parse --short HEAD)
 PYTEST_OPTIONS ?= --capture=no --cov=$(PACKAGE) --cov-report html
-SPHINX_BUILD ?= $(PYTHON_DIRNAME)/sphinx-build
+SPHINX_BUILD ?= sphinx-build
 SPHINX_OPTIONS ?=
 SPHINX_SOURCEDIR ?= docs
 SPHINX_BUILDDIR ?= $(SPHINX_SOURCEDIR)/_build
-YAPF ?= $(PYTHON) -m yapf
-YAPF_OPTIONS ?= -rip
 
 .PHONY: $(SPHINX_SOURCEDIR) clean clean-dist apidoc format help install install-dev release test benchmarks qa
 
 install:  ## Installs the project.
-	$(POETRY) install --only main
+	$(UV) sync --no-dev
 
 install-dev:  ## Installs the project (with dev dependencies).
-	$(POETRY) install
+	$(UV) sync --all-groups
 
 wheel:
 	mkdir -p dist
-	bin/sandbox "$(MAKE) install-dev; $(POETRY) build; cp dist/* $(PWD)/dist"
+	bin/sandbox "$(MAKE) install-dev; $(UV) build; cp dist/* $(PWD)/dist"
 
 clean: clean-dist  ## Cleans up the working copy.
 	find . -name __pycache__ -type d | xargs rm -rf
@@ -39,22 +28,22 @@ clean-dist:  ## Cleans up the distribution files (wheels...)
 
 apidoc:  ## Generate api doc
 	rm -rf docs/reference;
-	$(POETRY) run bin/generate_apidoc
+	$(UV) run bin/generate_apidoc
 
 test: install-dev  ## Runs the test suite.
-	$(POETRY) run pytest $(PYTEST_OPTIONS) --benchmark-disable tests
+	$(UV) run pytest $(PYTEST_OPTIONS) --benchmark-disable tests
 
 benchmarks: install-dev  ## Runs the benchmark suite.
-	$(PYTEST) $(PYTEST_OPTIONS) --benchmark-only tests
+	$(UV) run pytest $(PYTEST_OPTIONS) --benchmark-only tests
 
 qa: clean apidoc format test benchmarks
 
 $(SPHINX_SOURCEDIR): install-dev  ##
-	$(SPHINX_BUILD) -b html -D latex_paper_size=a4 $(SPHINX_OPTIONS) $(SPHINX_SOURCEDIR) $(SPHINX_BUILDDIR)/html
+	$(UV) run $(SPHINX_BUILD) -b html -D latex_paper_size=a4 $(SPHINX_OPTIONS) $(SPHINX_SOURCEDIR) $(SPHINX_BUILDDIR)/html
 
-format: install-dev  ## Reformats the whole python codebase using isort and black.
-	isort whistle tests
-	black whistle tests
+format: install-dev  ## Reformats the whole python codebase using ruff.
+	$(UV) run ruff check --fix .
+	$(UV) run ruff format .
 
 help:   ## Shows available commands.
 	@echo "Available commands:"
