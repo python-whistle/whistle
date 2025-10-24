@@ -1,5 +1,4 @@
 import asyncio
-import inspect
 from typing import Optional, cast
 
 from whistle.dispatchers.base import AbstractEventDispatcher
