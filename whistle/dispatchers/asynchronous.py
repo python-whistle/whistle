@@ -1,3 +1,4 @@
+import asyncio
 import inspect
 from typing import Optional, cast
 
@@ -15,7 +16,8 @@ class AsyncEventDispatcher(AbstractEventDispatcher):
     """
 
     def add_listener(self, event_id: str, listener: IListener, /, *, priority: int = 0):
-        if not inspect.iscoroutinefunction(listener):
+        # Use asyncio.iscoroutinefunction as it's more lenient and handles mock objects better
+        if not asyncio.iscoroutinefunction(listener):
             raise TypeError(f"Listener should be a coroutine function, {type(listener)} given")
         return super().add_listener(event_id, listener, priority=priority)
 
