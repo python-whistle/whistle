@@ -49,9 +49,6 @@ Release Steps
       git add pyproject.toml
       git commit -m "chore: bump version to $VERSION"
 
-      # Push to main
-      git push origin main
-
 4. **Create an annotated git tag**
 
    Create an annotated tag (required for proper git object tracking):
@@ -67,6 +64,7 @@ Release Steps
 
    .. code-block:: bash
 
+      git push origin main
       git push origin $VERSION
 
 6. **GitHub Actions takes over**
@@ -105,33 +103,6 @@ Follow semantic versioning:
 * **Alpha releases**: ``X.Y.Z-alphaN`` (e.g., ``2.1.0-alpha1``)
 
 Pre-release versions (rc, beta, alpha) are automatically marked as pre-releases on GitHub.
-
-Complete Example
-----------------
-
-Here's a complete example of releasing version 2.0.2:
-
-.. code-block:: bash
-
-   # Set version
-   export VERSION=2.0.2
-
-   # Run tests
-   make test
-   make format
-
-   # Update version in pyproject.toml
-   sed -i.bak "s/^version = .*/version = \"$VERSION\"/" pyproject.toml && rm pyproject.toml.bak
-   git add pyproject.toml
-   git commit -m "chore: bump version to $VERSION"
-   git push origin main
-
-   # Create and push annotated tag
-   git tag -a $VERSION -m "Release $VERSION"
-   git push origin $VERSION
-
-   # Verify after GitHub Actions completes
-   pip install whistle==$VERSION
 
 Troubleshooting
 ---------------

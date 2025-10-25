@@ -5,27 +5,20 @@ Whistle
 dispatching events and listening to them.
 
 .. image:: https://img.shields.io/pypi/v/whistle.svg
-    :target: https://pypi.python.org/pypi/whistle
+    :target: https://pypi.org/project/whistle/
     :alt: PyPI
 
-.. image:: https://img.shields.io/pypi/pyversions/whistle.svg
-    :target: https://pypi.python.org/pypi/whistle
-    :alt: Versions
+.. image:: https://img.shields.io/pypi/pyversions/whistle
+    :target: https://pypi.org/project/whistle/
+    :alt: Python Versions
 
-.. image:: https://readthedocs.org/projects/whistle/badge/?version=latest
-    :target: http://whistle.readthedocs.org/en/latest/?badge=latest
-    :alt: Documentation Status
+.. image:: https://github.com/python-whistle/whistle/actions/workflows/ci.yml/badge.svg
+    :target: https://github.com/python-whistle/whistle/actions/workflows/ci.yml
+    :alt: CI Status
 
-.. image:: https://travis-ci.org/python-whistle/whistle.svg?branch=master
-    :target: https://travis-ci.org/python-whistle/whistle
-
-.. image:: https://img.shields.io/coveralls/python-whistle/whistle/master.svg
-    :target: https://coveralls.io/github/python-whistle/whistle?branch=master
-    :alt: Coverage
-
-.. image:: https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpython-whistle%2Fwhistle.svg?type=shield
-    :target: https://app.fossa.io/projects/git%2Bgithub.com%2Fpython-whistle%2Fwhistle?ref=badge_shield
-    :alt: License Status
+.. image:: https://img.shields.io/github/license/python-whistle/whistle
+    :target: https://github.com/python-whistle/whistle/blob/main/LICENSE
+    :alt: License
 
 * Homepage: https://python-whistle.github.io/
 * Issues: https://github.com/python-whistle/whistle/issues
@@ -75,9 +68,5 @@ Dispatch!
 ----
 
 Made with ♥ by `Romain Dorgueil <https://twitter.com/rdorgueil>`_ and `contributors <https://github.com/python-whistle/whistle/graphs/contributors>`_.
-
-.. image:: https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpython-whistle%2Fwhistle.svg?type=large
-    :target: https://app.fossa.io/projects/git%2Bgithub.com%2Fpython-whistle%2Fwhistle?ref=badge_large
-    :alt: License Status
 
 
