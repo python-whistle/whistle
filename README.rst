@@ -67,13 +67,13 @@ Dispatch!
 Documentation
 :::::::::::::
 
-For complete documentation, visit https://python-whistle.github.io/
+For complete documentation, visit https://python-whistle.readthedocs.io/
 
 Links
 :::::
 
 * Homepage: https://python-whistle.github.io/
-* Documentation: https://python-whistle.github.io/
+* Documentation: https://python-whistle.readthedocs.io/
 * PyPI: https://pypi.org/project/whistle/
 * Source Code: https://github.com/python-whistle/whistle
 * Issue Tracker: https://github.com/python-whistle/whistle/issues

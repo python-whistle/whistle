@@ -157,7 +157,7 @@ jobs:
           pip install whistle==${{ steps.version.outputs.version }}
           \`\`\`
 
-          See the [documentation](https://python-whistle.github.io/) for more information.
+          See the [documentation](https://python-whistle.readthedocs.io/) for more information.
           EOF
 
       - name: Create GitHub Release
