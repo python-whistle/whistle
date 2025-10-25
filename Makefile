@@ -30,6 +30,12 @@ apidoc:  ## Generate api doc
 	rm -rf docs/reference;
 	$(UV) run bin/generate_apidoc
 
+docs:  ## Build html documentation
+	$(UV) run $(MAKE) -C docs html
+
+docs-dev:  ## Spin up a livereload documentation server
+	$(UV) run $(MAKE) -C docs dev
+
 test: install-dev  ## Runs the test suite.
 	$(UV) run pytest $(PYTEST_OPTIONS) --benchmark-disable tests
 
@@ -37,9 +43,6 @@ benchmarks: install-dev  ## Runs the benchmark suite.
 	$(UV) run pytest $(PYTEST_OPTIONS) --benchmark-only tests
 
 qa: clean apidoc format test benchmarks
-
-$(SPHINX_SOURCEDIR): install-dev  ##
-	$(UV) run $(SPHINX_BUILD) -b html -D latex_paper_size=a4 $(SPHINX_OPTIONS) $(SPHINX_SOURCEDIR) $(SPHINX_BUILDDIR)/html
 
 format: install-dev  ## Reformats the whole python codebase using ruff.
 	$(UV) run ruff check --fix .

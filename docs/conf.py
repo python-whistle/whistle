@@ -42,6 +42,9 @@ root_doc = "index"
 
 html_theme = "furo"
 html_static_path = ["_static"]
+html_theme_options = {
+    "light_logo": "whistle.png",
+}
 html_js_files = ["js/links-target-blank.js"]
 html_css_files = ["css/whistle.css"]
 html_baseurl = "https://python-whistle.readthedocs.io/latest/"

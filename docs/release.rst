@@ -26,23 +26,34 @@ Release Steps
       make test
       make format
 
-2. **Create a git tag**
+2. **Set the version number**
 
-   Create a tag following semantic versioning (e.g., ``2.0.2``, ``2.1.0-rc1``):
+   Define the version number in an environment variable to avoid typos:
 
    .. code-block:: bash
 
-      git tag 2.0.2
+      export VERSION=2.0.2
       # Or for a release candidate:
-      git tag 2.1.0-rc1
+      export VERSION=2.1.0-rc1
 
-3. **Push the tag to GitHub**
+3. **Create an annotated git tag**
+
+   Create an annotated tag (required for proper git object tracking):
 
    .. code-block:: bash
 
-      git push origin 2.0.2
+      git tag -a $VERSION -m "Release $VERSION"
 
-4. **GitHub Actions takes over**
+   The ``-a`` flag creates an annotated tag (a real git object with metadata).
+   The ``-m`` flag provides a message for the tag.
+
+4. **Push the tag to GitHub**
+
+   .. code-block:: bash
+
+      git push origin $VERSION
+
+5. **GitHub Actions takes over**
 
    Once the tag is pushed, the Release workflow automatically:
 
@@ -53,20 +64,20 @@ Release Steps
    * Publishes to PyPI
    * Creates a GitHub Release with the built artifacts
 
-5. **Monitor the release**
+6. **Monitor the release**
 
    Watch the GitHub Actions workflow at:
    https://github.com/msqd/whistle/actions
 
    The workflow typically takes 5-10 minutes to complete.
 
-6. **Verify the release**
+7. **Verify the release**
 
    Once complete, verify the release:
 
    * Check PyPI: https://pypi.org/project/whistle/
    * Check GitHub Releases: https://github.com/msqd/whistle/releases
-   * Test installation: ``pip install whistle==2.0.2``
+   * Test installation: ``pip install whistle==$VERSION``
 
 Version Naming
 --------------
@@ -80,6 +91,29 @@ Follow semantic versioning:
 
 Pre-release versions (rc, beta, alpha) are automatically marked as pre-releases on GitHub.
 
+Complete Example
+----------------
+
+Here's a complete example of releasing version 2.0.2:
+
+.. code-block:: bash
+
+   # Set version
+   export VERSION=2.0.2
+
+   # Run tests
+   make test
+   make format
+
+   # Create annotated tag
+   git tag -a $VERSION -m "Release $VERSION"
+
+   # Push tag
+   git push origin $VERSION
+
+   # Verify after GitHub Actions completes
+   pip install whistle==$VERSION
+
 Troubleshooting
 ---------------
 
@@ -91,8 +125,9 @@ Troubleshooting
 
    .. code-block:: bash
 
-      git tag -d 2.0.2
-      git push origin :refs/tags/2.0.2
+      export VERSION=2.0.2  # Set to the failed version
+      git tag -d $VERSION
+      git push origin :refs/tags/$VERSION
 
 4. Create and push the tag again after fixing issues
 
