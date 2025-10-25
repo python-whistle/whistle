@@ -1278,7 +1278,7 @@ wheels = [
 
 [[package]]
 name = "whistle"
-version = "2.0.1"
+version = "2.1.0rc6"
 source = { editable = "." }
 
 [package.dev-dependencies]

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "whistle"
-version = "2.1.0"
+version = "2.1.1"
 description = "Event dispatcher (see python-whistle.github.io)."
 authors = [
     {name = "Romain Dorgueil", email = "romain@makersquad.fr"}
