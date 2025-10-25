@@ -44,9 +44,10 @@ Release Steps
 
       # Update the version in pyproject.toml (cross-platform)
       sed -i.bak "s/^version = .*/version = \"$VERSION\"/" pyproject.toml && rm pyproject.toml.bak
+      uv lock
 
       # Commit the version change
-      git add pyproject.toml
+      git add pyproject.toml uv.lock
       git commit -m "chore: bump version to $VERSION"
 
 4. **Create an annotated git tag**
