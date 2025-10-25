@@ -36,7 +36,23 @@ Release Steps
       # Or for a release candidate:
       export VERSION=2.1.0-rc1
 
-3. **Create an annotated git tag**
+3. **Update version in pyproject.toml**
+
+   Update the version in ``pyproject.toml`` and commit the change:
+
+   .. code-block:: bash
+
+      # Update the version in pyproject.toml
+      sed -i "s/^version = .*/version = \"$VERSION\"/" pyproject.toml
+
+      # Commit the version change
+      git add pyproject.toml
+      git commit -m "chore: bump version to $VERSION"
+
+      # Push to main
+      git push origin main
+
+4. **Create an annotated git tag**
 
    Create an annotated tag (required for proper git object tracking):
 
@@ -47,31 +63,30 @@ Release Steps
    The ``-a`` flag creates an annotated tag (a real git object with metadata).
    The ``-m`` flag provides a message for the tag.
 
-4. **Push the tag to GitHub**
+5. **Push the tag to GitHub**
 
    .. code-block:: bash
 
       git push origin $VERSION
 
-5. **GitHub Actions takes over**
+6. **GitHub Actions takes over**
 
    Once the tag is pushed, the Release workflow automatically:
 
-   * Updates the version in ``pyproject.toml``
    * Builds the Python package (wheel and sdist)
    * Tests the package on Python 3.10-3.13
    * Publishes to TestPyPI
    * Publishes to PyPI
    * Creates a GitHub Release with the built artifacts
 
-6. **Monitor the release**
+7. **Monitor the release**
 
    Watch the GitHub Actions workflow at:
    https://github.com/python-whistle/whistle/actions
 
    The workflow typically takes 5-10 minutes to complete.
 
-7. **Verify the release**
+8. **Verify the release**
 
    Once complete, verify the release:
 
@@ -105,10 +120,14 @@ Here's a complete example of releasing version 2.0.2:
    make test
    make format
 
-   # Create annotated tag
-   git tag -a $VERSION -m "Release $VERSION"
+   # Update version in pyproject.toml
+   sed -i "s/^version = .*/version = \"$VERSION\"/" pyproject.toml
+   git add pyproject.toml
+   git commit -m "chore: bump version to $VERSION"
+   git push origin main
 
-   # Push tag
+   # Create and push annotated tag
+   git tag -a $VERSION -m "Release $VERSION"
    git push origin $VERSION
 
    # Verify after GitHub Actions completes
