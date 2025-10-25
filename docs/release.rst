@@ -42,8 +42,8 @@ Release Steps
 
    .. code-block:: bash
 
-      # Update the version in pyproject.toml
-      sed -i "s/^version = .*/version = \"$VERSION\"/" pyproject.toml
+      # Update the version in pyproject.toml (cross-platform)
+      sed -i.bak "s/^version = .*/version = \"$VERSION\"/" pyproject.toml && rm pyproject.toml.bak
 
       # Commit the version change
       git add pyproject.toml
@@ -121,7 +121,7 @@ Here's a complete example of releasing version 2.0.2:
    make format
 
    # Update version in pyproject.toml
-   sed -i "s/^version = .*/version = \"$VERSION\"/" pyproject.toml
+   sed -i.bak "s/^version = .*/version = \"$VERSION\"/" pyproject.toml && rm pyproject.toml.bak
    git add pyproject.toml
    git commit -m "chore: bump version to $VERSION"
    git push origin main
