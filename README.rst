@@ -1,8 +1,7 @@
 Whistle
 =======
 
-`Whistle` is a lightweight python library that allow your application components to communicate with each other by
-dispatching events and listening to them.
+A lightweight, pure-Python event dispatcher for building decoupled applications.
 
 .. image:: https://img.shields.io/pypi/v/whistle.svg
     :target: https://pypi.org/project/whistle/
@@ -20,26 +19,26 @@ dispatching events and listening to them.
     :target: https://github.com/python-whistle/whistle/blob/main/LICENSE
     :alt: License
 
-* Homepage: https://python-whistle.github.io/
-* Issues: https://github.com/python-whistle/whistle/issues
+**Key Features:**
 
+* 🚀 **Pure Python** - No external dependencies
+* 🔄 **Sync & Async** - Full support for both synchronous and asynchronous workflows
+* 🎯 **Type Safe** - Prevents mixing sync and async listeners
+* 📦 **Lightweight** - Minimal footprint, maximum flexibility
+* 🎛️ **Priority Control** - Order listener execution
+* ⚡ **Event Propagation** - Stop event flow when needed
 
-Install
-:::::::
+Installation
+::::::::::::
 
 .. code-block:: shell
 
    pip install whistle
 
+Requires Python 3.10 or later. No dependencies.
 
-Quick start
+Quick Start
 :::::::::::
-
-Install the `whistle` package:
-
-.. code-block:: shell-session
-
-    $ pip install whistle
 
 Create an event dispatcher:
 
@@ -65,8 +64,22 @@ Dispatch!
     dispatcher.dispatch('spectacle.starts')
 
 
+Documentation
+:::::::::::::
+
+For complete documentation, visit https://python-whistle.github.io/
+
+Links
+:::::
+
+* Homepage: https://python-whistle.github.io/
+* Documentation: https://python-whistle.github.io/
+* PyPI: https://pypi.org/project/whistle/
+* Source Code: https://github.com/python-whistle/whistle
+* Issue Tracker: https://github.com/python-whistle/whistle/issues
+
 ----
 
-Made with ♥ by `Romain Dorgueil <https://twitter.com/rdorgueil>`_ and `contributors <https://github.com/python-whistle/whistle/graphs/contributors>`_.
+Made with ♥ by Romain Dorgueil and `contributors <https://github.com/python-whistle/whistle/graphs/contributors>`_.
 
 

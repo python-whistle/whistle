@@ -10,6 +10,7 @@ authors = [
     {name = "Romain Dorgueil", email = "romain@makersquad.fr"}
 ]
 readme = "README.rst"
+license = {file = "LICENSE"}
 requires-python = ">=3.10"
 dependencies = []
 
