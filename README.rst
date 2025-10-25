@@ -7,10 +7,6 @@ A lightweight, pure-Python event dispatcher for building decoupled applications.
     :target: https://pypi.org/project/whistle/
     :alt: PyPI
 
-.. image:: https://img.shields.io/pypi/pyversions/whistle
-    :target: https://pypi.org/project/whistle/
-    :alt: Python Versions
-
 .. image:: https://github.com/python-whistle/whistle/actions/workflows/ci.yml/badge.svg
     :target: https://github.com/python-whistle/whistle/actions/workflows/ci.yml
     :alt: CI Status
