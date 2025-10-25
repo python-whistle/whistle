@@ -59,7 +59,7 @@ Release Steps
 
    * Updates the version in ``pyproject.toml``
    * Builds the Python package (wheel and sdist)
-   * Tests the package on Python 3.9-3.13
+   * Tests the package on Python 3.10-3.13
    * Publishes to TestPyPI
    * Publishes to PyPI
    * Creates a GitHub Release with the built artifacts
@@ -67,7 +67,7 @@ Release Steps
 6. **Monitor the release**
 
    Watch the GitHub Actions workflow at:
-   https://github.com/msqd/whistle/actions
+   https://github.com/python-whistle/whistle/actions
 
    The workflow typically takes 5-10 minutes to complete.
 
@@ -76,7 +76,7 @@ Release Steps
    Once complete, verify the release:
 
    * Check PyPI: https://pypi.org/project/whistle/
-   * Check GitHub Releases: https://github.com/msqd/whistle/releases
+   * Check GitHub Releases: https://github.com/python-whistle/whistle/releases
    * Test installation: ``pip install whistle==$VERSION``
 
 Version Naming
