@@ -73,7 +73,7 @@ Release Steps
    Once the tag is pushed, the Release workflow automatically:
 
    * Builds the Python package (wheel and sdist)
-   * Tests the package on Python 3.10-3.13
+   * Tests the package on Python 3.10-3.14
    * Publishes to TestPyPI
    * Publishes to PyPI
    * Creates a GitHub Release with the built artifacts
