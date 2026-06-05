@@ -15,6 +15,8 @@ Added
 -----
 
 - Python 3.14 to the CI and release test matrices.
+- ``Event.reset()`` to clear propagation state and allow re-dispatching the
+  same event instance.
 
 Changed
 -------
