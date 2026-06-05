@@ -19,3 +19,12 @@ class Event(object):
     def stop_propagation(self):
         """Stop event propagation, meaning that the remaining handlers won't be called after this one."""
         self.propagation_stopped = True
+
+    def reset(self):
+        """
+        Reset the propagation state so the same event instance can be dispatched again.
+
+        Useful when a single event instance is reused across several dispatches and an intermediate
+        listener stopped propagation in a previous run.
+        """
+        self.propagation_stopped = False

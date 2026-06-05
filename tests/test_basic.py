@@ -162,3 +162,48 @@ def test_first_event_will_get_reference_to_dispatcher_and_name(event_id):
     assert not e.propagation_stopped
     assert e.dispatcher == dispatcher
     assert e.name == event_id
+
+
+def test_event_reset():
+    event = Event()
+    event.stop_propagation()
+    assert event.propagation_stopped
+
+    event.reset()
+    assert not event.propagation_stopped
+
+
+def test_event_is_reusable_after_reset():
+    dispatcher = EventDispatcher()
+
+    listener1 = mock.MagicMock()
+    state = {"stop": True}
+
+    def stopper(event):
+        if state["stop"]:
+            event.stop_propagation()
+
+    listener3 = mock.MagicMock()
+
+    dispatcher.add_listener("evt", listener1)
+    dispatcher.add_listener("evt", stopper)
+    dispatcher.add_listener("evt", listener3)
+
+    event = Event()
+    dispatcher.dispatch("evt", event)
+    assert listener1.call_count == 1
+    assert listener3.call_count == 0
+    assert event.propagation_stopped
+
+    # reused as-is the instance stays stopped, so later listeners are still skipped
+    dispatcher.dispatch("evt", event)
+    assert listener3.call_count == 0
+
+    # after reset the instance is reusable and propagation runs through again
+    state["stop"] = False
+    event.reset()
+    assert not event.propagation_stopped
+    dispatcher.dispatch("evt", event)
+    assert listener1.call_count == 3
+    assert listener3.call_count == 1
+    assert not event.propagation_stopped

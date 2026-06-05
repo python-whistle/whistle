@@ -14,16 +14,5 @@ Unreleased
 Added
 -----
 
-- Python 3.14 to the CI and release test matrices.
-
-Changed
--------
-
-- Moved the package trove classifiers into ``pyproject.toml`` so they ship in
-  the published metadata, covering Python 3.10 to 3.14.
-- Updated the supported Python version range in ``docs/release.rst``.
-
-Removed
--------
-
-- ``classifiers.txt``, which was not read by the build.
+- ``Event.reset()`` to clear propagation state and allow re-dispatching the
+  same event instance.
