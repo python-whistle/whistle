@@ -19,5 +19,11 @@ Added
 Changed
 -------
 
-- Synced the supported Python versions in ``classifiers.txt`` and
-  ``docs/release.rst`` to list 3.10 to 3.14.
+- Moved the package trove classifiers into ``pyproject.toml`` so they ship in
+  the published metadata, covering Python 3.10 to 3.14.
+- Updated the supported Python version range in ``docs/release.rst``.
+
+Removed
+-------
+
+- ``classifiers.txt``, which was not read by the build.
